@@ -1,0 +1,2 @@
+ebuild pfstools-*.ebuild manifest
+ebuild pfstools-*.ebuild install
