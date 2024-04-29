@@ -13,7 +13,7 @@
 # If an eclass doesn't support latest EAPI, use the previous EAPI instead.
 EAPI=8
 
-inherit toolchain-funcs
+inherit cmake toolchain-funcs
 
 # inherit lists eclasses to inherit functions from. For example, an ebuild
 # that needs the eautoreconf function from autotools.eclass won't work
@@ -39,7 +39,6 @@ SRC_URI="https://github.com/sommerbe/${PN}/archive/refs/tags/v${PV}.tar.gz"
 # If you don't need to change it, leave the S= line out of the ebuild
 # to keep it tidy.
 #S="${WORKDIR}/${P}"
-
 
 # License of the package.  This must match the name of file(s) in the
 # licenses/ directory.  For complex license combination see the developer
@@ -80,12 +79,11 @@ KEYWORDS="~amd64"
 # Comprehensive list of any and all USE flags leveraged in the ebuild,
 # with some exceptions, e.g., ARCH specific flags like "amd64" or "ppc".
 # Not needed if the ebuild doesn't use any USE flags.
-#IUSE="imagemag"
+IUSE="+imagemagick +opencv +tiff +fftw"
 
 # A space delimited list of portage features to restrict. man 5 ebuild
 # for details.  Usually not needed.
 #RESTRICT="strip"
-
 
 # Run-time dependencies. Must be defined to whatever this depends on to run.
 # Example:
@@ -95,8 +93,10 @@ KEYWORDS="~amd64"
 # had installed on your system when you tested the package.  Then
 # other users hopefully won't be caught without the right version of
 # a dependency.
-#RDEPEND="
-#	imagemag ? ( <= media-gfx/imagemagick-6.9.12.89 )"
+RDEPEND="imagemagick? ( >=media-gfx/imagemagick-7:0=[cxx] )
+	opencv? ( >=media-libs/opencv-4.7.0:0 )
+	tiff? ( >=media-libs/tiff-4.5.0 )
+	fftw? ( >=sci-libs/fftw-3.3.10 )"
 
 # Build-time dependencies that need to be binary compatible with the system
 # being built (CHOST). These include libraries that we link against.
@@ -106,7 +106,6 @@ KEYWORDS="~amd64"
 # Build-time dependencies that are executed during the emerge process, and
 # only need to be present in the native build system (CBUILD). Example:
 #BDEPEND="virtual/pkgconfig"
-
 
 # The following src_configure function is implemented as default by portage, so
 # you only need to call it if you need a different behaviour.
@@ -123,8 +122,10 @@ src_configure() {
 	# process should abort if they aren't successful.)
 	#mkdir build
 	#cd build
-	#cmake -DWITH_ImageMagick=OFF || die
-	cmake -DWITH_ImageMagick=ON . || die
+	cmake -DWITH_ImageMagick=$(usex imagemagick) \
+			-DWITH_OpenCV=$(usex opencv) \
+			-DWITH_TIFF=$(usex tiff) \
+			-DWITH_FFTW=$(usex fftw) . || die
 	#cmake . || die
 	#./configure \
 	#	--host=${CHOST} \

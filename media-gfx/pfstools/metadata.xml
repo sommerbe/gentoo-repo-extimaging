@@ -24,9 +24,14 @@
     pfstools - a set of programs for reading, writing, manipulating and viewing high-dynamic range (HDR) images and video frames. pfscalibration - photometric calibration of cameras and HDR images from multiple exposures. pfstmo - tone mapping operators.
   </longdescription>
   <use>
-    <flag name="imagemag">Enable use of ImageMagick++ library (build with cxx flag itself)</flag>
+    <flag name="imagemagick">Enable use of ImageMagick++ library (build with cxx flag itself)</flag>
+    <flag name="opencv">
+	  Enable <pkg>media-libs/opencv</pkg> support
+	</flag>
+	<flag name="tiff">Enable <pkg>media-libs/tiff</pkg> support</flag>
+	<flag name="fftw">Enable <pkg>sci-libs/fftw</pkg> support</flag>
   </use>
   <upstream>
-    <remote-id type="sourceforge">pfstools</remote-id>
+    <remote-id type="github">sommerbe/pfstools</remote-id>
   </upstream>
 </pkgmetadata>
