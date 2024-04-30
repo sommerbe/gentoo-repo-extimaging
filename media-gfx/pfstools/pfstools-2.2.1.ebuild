@@ -13,7 +13,7 @@
 # If an eclass doesn't support latest EAPI, use the previous EAPI instead.
 EAPI=8
 
-inherit cmake toolchain-funcs
+inherit toolchain-funcs #cmake
 
 # inherit lists eclasses to inherit functions from. For example, an ebuild
 # that needs the eautoreconf function from autotools.eclass won't work
@@ -32,6 +32,7 @@ HOMEPAGE="https://pfstools.sourceforge.net/"
 # Point to any required sources; these will be automatically downloaded by
 # Portage.
 #SRC_URI="mirror://sourceforge/${PN}/${P}.tgz"
+#SRC_URI="https://github.com/sommerbe/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
 SRC_URI="https://github.com/sommerbe/${PN}/archive/refs/tags/v${PV}.tar.gz"
 
 # Source directory; the dir where the sources can be found (automatically
@@ -79,7 +80,7 @@ KEYWORDS="~amd64"
 # Comprehensive list of any and all USE flags leveraged in the ebuild,
 # with some exceptions, e.g., ARCH specific flags like "amd64" or "ppc".
 # Not needed if the ebuild doesn't use any USE flags.
-IUSE="+imagemagick +opencv +tiff +fftw"
+IUSE="imagemagick openexr netpbm tiff +opengl +glut fftw gsl octave opencv exif"
 
 # A space delimited list of portage features to restrict. man 5 ebuild
 # for details.  Usually not needed.
@@ -93,10 +94,27 @@ IUSE="+imagemagick +opencv +tiff +fftw"
 # had installed on your system when you tested the package.  Then
 # other users hopefully won't be caught without the right version of
 # a dependency.
+#
+# TODO Dependencies:
+# openexr ( >=media-libs/openexr-3.1.7 )
+# netpbm ( >=media-libs/netpbm-11.2.0 )
+# qt ( >=dev-qt/... >=dev-libs/libqt... )
+# matlab ( >=??? )
+# gsl ( >=sci-libs/gsl-2.7.1 )
+# octave ( >=sci-mathematics/octave-8.2.0 )
+# exif ( >=media-libs/libexif-0.6.24 )
+#
 RDEPEND="imagemagick? ( >=media-gfx/imagemagick-7:0=[cxx] )
-	opencv? ( >=media-libs/opencv-4.7.0:0 )
+	openexr? ( >=media-libs/openexr-3.1.7 )
+	netpbm? ( >=media-libs/netpbm-11.2.0 )
 	tiff? ( >=media-libs/tiff-4.5.0 )
-	fftw? ( >=sci-libs/fftw-3.3.10 )"
+	opengl? ( >=virtual/opengl-7.0 )
+	glut? ( >=media-libs/freeglut-3.4.0 )
+	fftw? ( >=sci-libs/fftw-3.3.10 )
+	gsl? ( >=sci-libs/gsl-2.7.1 )
+	octave? ( >=sci-mathematics/octave-8.2.0 )
+	opencv? ( >=media-libs/opencv-4.7.0:0 )
+	exif? ( >=media-libs/libexif-0.6.24 )"
 
 # Build-time dependencies that need to be binary compatible with the system
 # being built (CHOST). These include libraries that we link against.
@@ -122,10 +140,22 @@ src_configure() {
 	# process should abort if they aren't successful.)
 	#mkdir build
 	#cd build
-	cmake -DWITH_ImageMagick=$(usex imagemagick) \
-			-DWITH_OpenCV=$(usex opencv) \
+	# -DWITH_QT
+	# -DWITH_MATLAB
+	# pfsglview: requires opengl glut
+	# pfsalign: requires opencv exif
+	cmake   \
+			-DWITH_OpenEXR=$(usex openexr) \
+			-DWITH_ImageMagick=$(usex imagemagick) \
+			-DWITH_NetPBM=$(usex netpbm) \
 			-DWITH_TIFF=$(usex tiff) \
-			-DWITH_FFTW=$(usex fftw) . || die
+			-DWITH_pfsglview=ON \
+			-DWITH_FFTW=$(usex fftw) \
+			-DWITH_GSL=$(usex gsl) \
+			-DWITH_Octave=$(usex octave) \
+			-DWITH_OpenCV=$(usex opencv) \
+			. || die
+	#cmake_src_configure
 	#cmake . || die
 	#./configure \
 	#	--host=${CHOST} \

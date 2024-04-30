@@ -25,11 +25,16 @@
   </longdescription>
   <use>
     <flag name="imagemagick">Enable use of ImageMagick++ library (build with cxx flag itself)</flag>
-    <flag name="opencv">
-	  Enable <pkg>media-libs/opencv</pkg> support
-	</flag>
-	<flag name="tiff">Enable <pkg>media-libs/tiff</pkg> support</flag>
-	<flag name="fftw">Enable <pkg>sci-libs/fftw</pkg> support</flag>
+	<flag name="openexr">Eanble <pkg>media-libs/openexr-3.1.7</pkg> support</flag>
+	<flag name="netpbm">Eanble <pkg>media-libs/netpbm-11.2.0</pkg> support</flag>
+	<flag name="tiff">Eanble <pkg>media-libs/tiff-4.5.0</pkg> support</flag>
+	<flag name="opengl">Eanble <pkg>virtual/opengl-7.0</pkg> support</flag>
+	<flag name="glut">Eanble <pkg>media-libs/freeglut-3.4.0</pkg> support</flag>
+	<flag name="fftw">Eanble <pkg>sci-libs/fftw-3.3.10</pkg> support</flag>
+	<flag name="gsl">Eanble <pkg>sci-libs/gsl-2.7.1</pkg> support</flag>
+	<flag name="octave">Eanble <pkg>sci-mathematics/octave-8.2.0</pkg> support</flag>
+	<flag name="opencv">Eanble <pkg>media-libs/opencv-4.7.0:0</pkg> support</flag>
+	<flag name="exif">Eanble <pkg>media-libs/libexif-0.6.24</pkg> support</flag>"
   </use>
   <upstream>
     <remote-id type="github">sommerbe/pfstools</remote-id>
