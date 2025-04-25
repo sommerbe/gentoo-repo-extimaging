@@ -9,6 +9,6 @@ This repository holds user Gentoo packages (ebuilds) of imaging tools being not 
 # Usage
 
 ````
-eselect repository add sommerbe-imaging git https://github.com/sommerbe/gentoo-repo-extimaging.git
-emaint sync --repo sommerbe-imaging
+eselect repository add sommerbe git https://github.com/sommerbe/gentoo-repo-extimaging.git
+emaint sync --repo sommerbe
 ````
