@@ -13,11 +13,11 @@
 -->
 <pkgmetadata>
   <maintainer type="Benjamin Sommer">
-    <email>benjaminsommer@mailbox.org</email>
+    <email>redacted@localhost.tld</email>
     <description>Primary maintainer</description>
   </maintainer>
   <maintainer type="project">
-    <email>exampleproject@gentoo.org</email>
+    <email>tbd@localhost.tld</email>
     <name>pfstools project</name>
   </maintainer>
   <longdescription>
